@@ -33,29 +33,55 @@ class MyApp extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Colors.deepPurple),
-                          strokeWidth: 5,
-                        ),
-                        const SizedBox(height: 20),
-                        TweenAnimationBuilder(
-                          tween: Tween<double>(begin: 0, end: 1),
-                          duration: const Duration(milliseconds: 800),
-                          builder: (context, double value, child) {
-                            return Opacity(
-                              opacity: value,
-                              child: const Text(
-                                'Fetching Weather Data...',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                        Container(
+                          width: 120,
+                          height: 120,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: Colors.deepPurple.withOpacity(0.5),
+                              width: 3,
+                            ),
+                          ),
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              ...List.generate(3, (index) {
+                                return TweenAnimationBuilder(
+                                  tween: Tween<double>(begin: 0.0, end: 2.0),
+                                  duration: Duration(
+                                      milliseconds: 1500 + (index * 400)),
+                                  builder: (context, double value, _) {
+                                    return Container(
+                                      width: 120,
+                                      height: 120,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                          color: Colors.deepPurple.withOpacity(
+                                            (1 - (value - value.floor()))
+                                                    .clamp(0.0, 1.0) *
+                                                0.3,
+                                          ),
+                                          width: 2,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  onEnd: () {
+                                    (context as Element).markNeedsBuild();
+                                  },
+                                );
+                              }),
+                              Icon(
+                                Icons.cloud,
+                                size: 50,
+                                color: Colors.deepPurple.withOpacity(0.8),
                               ),
-                            );
-                          },
+                            ],
+                          ),
                         ),
+                        const SizedBox(height: 8),
                       ],
                     ),
                   ),
