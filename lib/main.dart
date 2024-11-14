@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simplecounterinflutter/bloc/weather_bloc_bloc.dart';
-import 'package:simplecounterinflutter/screeens/home_screen.dart';
 import 'package:geolocator/geolocator.dart';
+import 'screens/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
